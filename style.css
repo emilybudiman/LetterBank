@@ -101,11 +101,3 @@ body.night-mode {
     background-color: black;
     color: #ffffff;
 }
-
-#textInput {
-    width: 100%; /* Full width on mobile */
-    padding: 10px;
-    font-size: 18px;
-    margin-bottom: 20px; /* Space below the input */
-    box-sizing: border-box; /* Ensure padding is included in width */
-}
