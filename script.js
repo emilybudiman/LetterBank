@@ -769,14 +769,7 @@ const usedImages = []; // Track used images
 const imageContainer = document.getElementById('imageContainer');
 let randomPositioningEnabled = false; // Toggle for random positioning
 
-// Create a temporary input field
-const tempInput = document.createElement('input');
-tempInput.style.position = 'absolute';
-tempInput.style.opacity = '0'; // Make it invisible
-tempInput.style.pointerEvents = 'none'; // Prevent interactions
-document.body.appendChild(tempInput);
-
-// Function to render a random image based on the provided letter
+// Function to render a random image
 function renderRandomImage(letter) {
     const images = imageGroups[letter];
     if (images) {
@@ -791,9 +784,9 @@ function renderRandomImage(letter) {
 
             if (randomPositioningEnabled) {
                 // Random positioning
+                newImage.classList.add('random');
                 const x = Math.random() * (window.innerWidth - 100);
                 const y = Math.random() * (window.innerHeight - 100);
-                newImage.style.position = 'absolute';
                 newImage.style.left = `${x}px`;
                 newImage.style.top = `${y}px`;
             }
@@ -820,51 +813,22 @@ function clearImageContainer() {
     usedImages.length = 0; // Clear the usedImages array
 }
 
-// Insert a blank space
-function insertBlankSpace() {
-    const blankSpace = document.createElement('div');
-    blankSpace.className = 'blank-space'; // You can style this if needed
-    blankSpace.style.width = '100px'; // Set width for the blank space
-    blankSpace.style.height = '100px'; // Set height for the blank space
-    blankSpace.style.display = 'inline-block'; // Align with images
-    imageContainer.appendChild(blankSpace);
-}
-
-// Event listener for screen taps
-document.addEventListener('touchstart', function(event) {
-    tempInput.style.pointerEvents = 'auto'; // Enable interactions
-    tempInput.focus(); // Focus on the input field to trigger the keyboard
-
-    // Listen for input events on the temporary input field
-    tempInput.addEventListener('input', function() {
-        const inputValue = tempInput.value;
-
-        // Clear previous images
-        clearImageContainer();
-
-        // Render images for each letter in the input value
-        for (const letter of inputValue) {
-            if (letter.trim() !== '') { // Skip if it's just whitespace
-                renderRandomImage(letter.toLowerCase());
-            } else {
-                insertBlankSpace(); // Insert a blank space for spaces
-            }
-        }
-    });
-
-    // Handle input loss when the keyboard closes
-    tempInput.addEventListener('blur', function() {
-        tempInput.value = ''; // Clear the input value
-        clearImageContainer(); // Optionally clear images when keyboard closes
-        tempInput.style.pointerEvents = 'none'; // Disable interactions
-    });
+document.addEventListener('keydown', function(event) {
+    // Check if the spacebar was pressed
+    if (event.code === 'Space') {
+        event.preventDefault(); // Prevent default spacebar behavior
+        insertBlankSpace(); // Insert a blank space
+    } else {
+        const letter = event.key.toLowerCase();
+        renderRandomImage(letter); // Render image for letter key
+    }
 });
 
-// Event listener for the backspace key
+// Event listener for backspace key to remove the last image
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Backspace') {
         event.preventDefault(); // Prevent default backspace behavior
-        removeLastImage(); // Remove the last image
+        removeLastImage(); // Call function to remove the last image
     }
 });
 
@@ -877,14 +841,25 @@ document.getElementById('togglePosition').addEventListener('click', function() {
 // Set Day Mode
 document.getElementById('dayMode').addEventListener('click', function() {
     document.body.classList.remove('night-mode'); // Ensure night mode is removed
+    document.querySelector('header').classList.remove('night-mode'); // Ensure header is in day mode
     imageContainer.classList.remove('night-mode'); // Ensure image container is in day mode
 });
 
 // Set Night Mode
 document.getElementById('nightMode').addEventListener('click', function() {
     document.body.classList.add('night-mode'); // Add night mode class
+    document.querySelector('header').classList.add('night-mode'); // Add night mode class to header
     imageContainer.classList.add('night-mode'); // Add night mode class to image container
 });
 
 // Event listener for the Clear Images button
 document.getElementById('clearContainer').addEventListener('click', clearImageContainer);
+
+function insertBlankSpace() {
+    const blankSpace = document.createElement('div');
+    blankSpace.className = 'blank-space'; // You can style this if needed
+    blankSpace.style.width = '100px'; // Set width for the blank space
+    blankSpace.style.height = '100px'; // Set height for the blank space
+    blankSpace.style.display = 'inline-block'; // Align with images
+    imageContainer.appendChild(blankSpace);
+}
