@@ -1,0 +1,103 @@
+body{
+    background-color: white;
+}
+
+header {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Space between elements */
+    align-items: center; /* Center items vertically */
+}
+
+#imageContainer {
+    padding: 100px;
+    margin-top: -50px;
+    position: relative; /* Allow absolute positioning when random positioning is enabled *//
+    overflow: auto; /* Allow scrolling if images overflow */
+    display: flex; /* Use flexbox layout for grid */
+    flex-wrap: wrap; /* Allow wrapping of images */
+    justify-content: flex-start; /* Align images to the start */
+    align-items: flex-start; /* Align images to the top */
+}
+
+.image {
+    width: 100px; /* Set a fixed width for all images */
+    height: auto; /* Maintain aspect ratio */
+    max-height: 100px; /* Optional: limit max height to prevent oversized images */
+    object-fit: contain; /* Maintain aspect ratio without stretching */
+    padding-bottom: 20px;
+}
+        
+.random {
+    position: absolute; /* Position images absolutely within the container */
+}
+
+#clearContainer, #togglePosition {
+    margin: 50px; /* Add some spacing */
+    padding: 15px; /* Add padding */
+    padding-left: 30px;
+    padding-right: 30px;
+    cursor: pointer; /* Change cursor to pointer */
+    background-color: white;
+    color: black;
+    border-color: black;
+    border-radius: 20px;
+    border-width: 2px;
+    font-size: 14px;
+    letter-spacing: 3px;
+}
+
+#clearContainer{
+    left: 600px;
+}
+
+#clearContainer:hover{
+    transform: scale(1.05);
+}
+
+#togglePosition:hover{
+    transform: scale(1.05);
+}
+
+#nightMode:hover{
+    transform: scale(1.2);
+}
+
+#dayMode:hover{
+    transform: scale(1.2);
+}
+
+
+#dayMode{
+    background-color: white;
+    left: 200px;
+}
+
+#nightMode{
+    background-color: black;
+
+}
+#dayMode, #nightMode {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: 18px;
+    padding: 20px;
+}
+
+#togglePosition .night-mode{
+    background-color: black;
+    color: white;
+    border-color: white;
+}
+
+h1{
+    font-size: 16px;
+    letter-spacing: 3px;
+    font-family: sans-serif;
+    margin: 100px; /* Add some spacing */
+}
+
+body.night-mode {
+    background-color: black;
+    color: #ffffff;
+}
